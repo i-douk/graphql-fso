@@ -41,12 +41,10 @@ const Authors = () => {
       <div>
       <h2>Set Birth Year</h2>
       <form onSubmit={submit}>
-        <div>
-          Name <input
-            value={name}
-            onChange={({ target }) => setName(target.value)}
-          />
-        </div>
+      <select name="select author" onChange={(event) => setName(event.
+      target.value)}>
+        {authors.map(author => <option key={author.id}>{author.name}</option>)}
+      </select>
         <div>
           Birth Year <input
             value={year}
