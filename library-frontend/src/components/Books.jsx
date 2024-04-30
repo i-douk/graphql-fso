@@ -10,7 +10,6 @@ const Books = () => {
   return (
     <div>
       <h2>books</h2>
-
       <table>
         <tbody>
           <tr>
