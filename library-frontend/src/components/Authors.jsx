@@ -10,15 +10,12 @@ const ALL_AUTHORS = gql`
   }
 `
 const Authors = () => {
-  // if (!props.show) {
-  //   return null
-  // }
+
   const result = useQuery(ALL_AUTHORS)
-  const authors = result.data.allAuthors
-  console.log(result)
   if (result.loading) {
     return <div>loading...</div>
   }
+  const authors = result.data.allAuthors
 
   return (
     <div>
