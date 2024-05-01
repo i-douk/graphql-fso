@@ -13,7 +13,6 @@ const Authors = () => {
   const authors = result.data.allAuthors
   const submit = (event) => {
     event.preventDefault()
-
     editAuthorBirthYear({ variables: { name, setBornTo : year} })
     setName('')
     setYear('')
@@ -43,7 +42,7 @@ const Authors = () => {
       <form onSubmit={submit}>
       <select name="select author" onChange={(event) => setName(event.
       target.value)}>
-        {authors.map(author => <option key={author.id}>{author.name}</option>)}
+        {authors.map(author =><option key={author.id}>{author.name}</option>)}
       </select>
         <div>
           Birth Year <input
