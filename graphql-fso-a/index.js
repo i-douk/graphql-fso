@@ -93,7 +93,7 @@ const resolvers = {
             code: 'BAD_USER_INPUT',
             invalidArgs: args.title,
           },
-        });
+        })
       }
       let author = await Author.findOne({ name: args.author })
       if (!author) {
@@ -111,10 +111,21 @@ const resolvers = {
             code: 'BAD_USER_INPUT',
             invalidArgs: args.name,
           },
-        });
+        })
       }
       const newAuthor = new Author({ name: args.name })
-      return newAuthor.save()
+          try {
+             await newAuthor.save()
+            } catch (error) {
+              throw new GraphQLError('Saving author failed', {
+                extensions: {
+                  code: 'BAD_USER_INPUT',
+                  invalidArgs: args.name,
+                  error
+                }
+              })
+          }
+        return newAuthor
     },
     editAuthor: async (root, args) => {
       const author = await Author.findOne({ name: args.name })
@@ -122,7 +133,18 @@ const resolvers = {
         return null
       }
       author.born = args.setBornTo
-      return author.save()
+      try {
+          await author.save()
+        } catch (error) {
+          throw new GraphQLError('Editing author failed', {
+            extensions: {
+              code: 'BAD_USER_INPUT',
+              invalidArgs: args.setBornTo,
+              error
+            }
+          })
+        }
+        return author
     },
   },
 };
