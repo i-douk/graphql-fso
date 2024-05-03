@@ -5,7 +5,6 @@ const Author = require('./models/author')
 require('dotenv').config()
 const { ApolloServer } = require('@apollo/server')
 const { startStandaloneServer } = require('@apollo/server/standalone')
-
 const { GraphQLError } = require('apollo-server')
 
 const MONGODB_URI = process.env.MONGODB_URI
@@ -89,6 +88,14 @@ const resolvers = {
       const existingBook = await Book.findOne({ title: args.title, author: args.author })
       if (existingBook) {
         throw new GraphQLError('Title by author must be unique', {
+          extensions: {
+            code: 'BAD_USER_INPUT',
+            invalidArgs: args.title,
+          },
+        })
+      }
+      if (args.title.length < 5) {
+        throw new GraphQLError('Title is too short', {
           extensions: {
             code: 'BAD_USER_INPUT',
             invalidArgs: args.title,
