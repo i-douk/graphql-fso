@@ -86,11 +86,11 @@ const resolvers = {
         return books
       }
       if (args.author) {
-        const booksByAuthor = await Book.find({ author: args.author })
+        const booksByAuthor = await Book.find({ author: args.author }).populate('autor')
         return booksByAuthor
       }
       if (args.genre) {
-        const booksByGenre = await Book.find({ genres: { $in: [args.genre] } })
+        const booksByGenre = await Book.find({ genres: { $in: [args.genre] } }).populate('author')
         return booksByGenre
       }
     },
@@ -112,7 +112,7 @@ const resolvers = {
           })
       }
 
-      const existingBook = await Book.findOne({ title: args.title, author: args.author })
+      const existingBook = await Book.findOne({ title: args.title })
       if (existingBook) {
         throw new GraphQLError('Title by author must be unique', {
           extensions: {
@@ -129,12 +129,15 @@ const resolvers = {
           },
         })
       }
+
       let author = await Author.findOne({ name: args.author })
       if (!author) {
         author = new Author({ name: args.author })
         await author.save()
       }
+
       const book = new Book({ ...args, author: author._id })
+      const bookPopulated = book.populate('author')
       return book.save()
     },
     addAuthor: async (root, args ,context) => {
