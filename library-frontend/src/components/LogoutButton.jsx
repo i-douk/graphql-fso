@@ -9,7 +9,7 @@ const logout = () => {
     setToken(null)
     localStorage.clear()
     client.resetStore()
-    navigate('/authors')
+    navigate('/books')
 }
   return (
     <Link onClick={logout}><button>logout </button></Link>

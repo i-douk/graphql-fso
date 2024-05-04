@@ -9,6 +9,7 @@ const LoginForm = ( { setToken } ) => {
   const [password, setPassword] = useState('')
   const [ login, result ] = useMutation(LOGIN)
   const navigate = useNavigate()
+  
   useEffect(() => {
     if ( result.data ) {
       const token = result.data.login.value
@@ -16,7 +17,7 @@ const LoginForm = ( { setToken } ) => {
       localStorage.setItem('library-user-token', token)
       navigate('/add')
     }
-  }, [result.data, setToken])
+  }, [navigate, result.data, setToken])
 
   const submit = async (event) => {
     event.preventDefault()
