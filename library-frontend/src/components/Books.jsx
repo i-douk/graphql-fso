@@ -8,7 +8,10 @@ const Books = () => {
     variables: { genre: genre }
   })
   const resultGenres = useQuery(GENRES)
-  console.log(resultGenres)
+  
+  const refetchBooks = () => {
+    result.refetch();
+  }
   if (result.loading) {
     return <div>loading...</div>
   }
@@ -35,8 +38,8 @@ const Books = () => {
       </table>
       <div>
         {resultGenres.data.existingGenres.map((g,index) =>
-          <button onClick={() => setGenre(g)} key={index}>{g}</button>)}
-          <button onClick={() => setGenre('')}>all genres</button>
+          <button onClick={() => {setGenre(g) ; refetchBooks()}} key={index}>{g}</button>)}
+          <button onClick={() => {setGenre('') ; refetchBooks()}}>all genres</button>
       </div>
     </div>
   )

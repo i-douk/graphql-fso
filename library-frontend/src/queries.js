@@ -6,6 +6,7 @@ export const ALL_AUTHORS = gql`
       name
       born
       bookCount
+      id
     }
   }
 `
@@ -18,6 +19,7 @@ export const ALL_BOOKS = gql`
         name
       }
       published
+     
     }
   }
 `
@@ -62,5 +64,14 @@ export const LOGIN = gql`
 export const GENRES = gql`
  query {
   existingGenres
+ }
+`
+
+export const USER = gql`
+ query {
+  me {
+    username
+    favoriteGenre
+  }
  }
 `

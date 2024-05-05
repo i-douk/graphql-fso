@@ -8,6 +8,7 @@ import {
 } from 'react-router-dom'
 import LoginForm from "./components/loginForm"
 import LogoutButton from "./components/LogoutButton"
+import Recommendations from "./components/Recommendations"
 const App = () => {
   const [token, setToken] = useState(null)
 
@@ -22,6 +23,7 @@ const App = () => {
         :
         <>
           <Link to="/add"><button>add a book</button></Link>
+          <Link to="/recommend"><button>recommend</button></Link>
         <LogoutButton setToken={setToken} />
         </>
         } 
@@ -31,6 +33,7 @@ const App = () => {
         <Route path="/authors" element={<Authors />} />
         <Route path="/books" element={<Books />} />
         <Route path="/add" element={<NewBook />} />
+        <Route path="/recommend" element={<Recommendations />} />
         <Route path="/login" element={<LoginForm setToken={setToken}/>} />
       </Routes>
     </Router>

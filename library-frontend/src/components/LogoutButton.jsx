@@ -1,18 +1,18 @@
 /* eslint-disable react/prop-types */
 import { useApolloClient } from '@apollo/client'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const LogoutButton = ({setToken}) => {
 const client = useApolloClient()
 const navigate = useNavigate()
 const logout = () => {
+    navigate('/books')
     setToken(null)
     localStorage.clear()
     client.resetStore()
-    navigate('/books')
 }
   return (
-    <Link onClick={logout}><button>logout </button></Link>
+    <button onClick={logout}>logout </button>
   )
 }
 
