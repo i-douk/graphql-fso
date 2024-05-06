@@ -11,16 +11,13 @@ const LoginForm = ( { setToken } ) => {
   const navigate = useNavigate()
   
   useEffect(() => {
-    if(result.loading) {
-      console.log('fetching user info')
-    }
-    if ( result.data ) {
+    if (result.data) {
       const token = result.data.login.value
       setToken(token)
       localStorage.setItem('library-user-token', token)
       navigate('/add')
     }
-  }, [navigate, result.data, result.loading, setToken])
+  }, [result.data, setToken, navigate])
 
   const submit = async (event) => {
     event.preventDefault()

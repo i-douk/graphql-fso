@@ -9,14 +9,14 @@ const Books = () => {
   })
   const resultGenres = useQuery(GENRES)
   
-  const refetchBooks = () => {
-    result.refetch();
-  }
   if (result.loading) {
     return <div>loading...</div>
   }
   const books = result.data.allBooks
- 
+  const refetchCache = () => {
+    result.refetch({ fetchPolicy: "cache-only" })
+  }
+  refetchCache()
   return (
     <div>
       <h2>books</h2>
@@ -38,8 +38,8 @@ const Books = () => {
       </table>
       <div>
         {resultGenres.data.existingGenres.map((g,index) =>
-          <button onClick={() => {setGenre(g) ; refetchBooks()}} key={index}>{g}</button>)}
-          <button onClick={() => {setGenre('') ; refetchBooks()}}>all genres</button>
+          <button onClick={() => {setGenre(g) }} key={index}>{g}</button>)}
+          <button onClick={() => {setGenre('') }}>all genres</button>
       </div>
     </div>
   )

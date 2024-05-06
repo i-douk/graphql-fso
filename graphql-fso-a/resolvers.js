@@ -75,7 +75,7 @@ const resolvers = {
   
         const book = new Book({ ...args, author: author._id })
         const bookPopulated = book.populate('author')
-        pubsub.publish('BOOK_ADDED', { bookAdded: book })
+        pubsub.publish('BOOK_ADDED', { bookAdded: bookPopulated })
         return book.save()
       },
       addAuthor: async (root, args ,context) => {

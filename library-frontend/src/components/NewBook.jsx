@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { ADD_BOOK, ALL_BOOKS , ALL_AUTHORS } from '../queries'
 import { useMutation } from '@apollo/client'
 import { useNavigate } from 'react-router-dom'
+import { updateCache } from '../App'
 const NewBook = () => {
   const navigate = useNavigate()
   const [title, setTitle] = useState('')
@@ -14,11 +15,7 @@ const NewBook = () => {
     update: (cache, response) => {
       const { addAuthor, addBook } = response.data
       
-      cache.updateQuery({ query: ALL_BOOKS }, ({ allBooks }) => {
-        return {
-          allBooks: allBooks.concat(addBook)
-        }
-      })
+      updateCache(cache, { query: ALL_BOOKS }, addBook)
   
       if (addAuthor) {
         cache.updateQuery({ query: ALL_AUTHORS }, ({ allAuthors }) => {
